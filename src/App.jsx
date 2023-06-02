@@ -1,18 +1,46 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import NavBar from "./components/NavBar.jsx";
+import { Home } from "./pages/Home";
+import { AzureAppConfig } from "./pages/AzureAppConfig";
+import { AzureKeyVault } from "./pages/AzureKeyVault";
+import { Profile } from "./pages/Profile";
+import { TriggerReports } from "./pages/TriggerReports";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { user, isAuthenticated, loginWithRedirect, logout, isLoading, error } =
+    useAuth0();
 
-  return (
-    <>
-      <NavBar />
-      
-    </>
-  );
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+  }
+  if (isLoading) {
+    return <h1>Loading.....</h1>;
+  }
+
+  console.log(isAuthenticated);
+  if (!isAuthenticated) {
+    loginWithRedirect();
+  }
+
+  if (isAuthenticated) {
+    console.log("in App");
+    return (
+      <>
+        <NavBar />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="AzureAppConfig" element={<AzureAppConfig />} />
+          <Route path="AzureKeyVault" element={<AzureKeyVault />} />
+          <Route path="Profile" element={<Profile />} />
+          <Route path="TriggerReports" element={<TriggerReports />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </>
+    );
+  }
 }
 
 export default App;
