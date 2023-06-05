@@ -81,8 +81,7 @@ export function NavBar() {
   // const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState(window.location.pathname);
 
-  const { user, isAuthenticated, loginWithRedirect, logout, isLoading, error } =
-    useAuth0();
+  const { user, logout } = useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -238,7 +237,11 @@ export function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt="Remy Sharp"
+                  // src="https://lh3.googleusercontent.com/a/AAcHTtcfYGhYNp8YhsD7Vox-uqUC_Ks2RneO75Ov4peJzA=s96-c"
+                  src={user.picture}
+                />
               </IconButton>
             </Tooltip>
             <Menu
