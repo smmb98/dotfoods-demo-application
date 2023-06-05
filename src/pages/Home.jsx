@@ -1,6 +1,11 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect, useState } from "react";
 
 export function Home() {
+  useEffect(() => {
+    document.title = "Demo App Home Page"; // Set the desired title
+  }, []);
+
   const { user } = useAuth0();
   // return <h1>HOME PAGE</h1>;
   return (
