@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
-import NavBar from "./components/NavBar.jsx";
+// import { NavBar } from "./components/NavBar.jsx";
+NavBar;
 import { Home } from "./pages/Home";
 import { AzureAppConfig } from "./pages/AzureAppConfig";
 import { AzureKeyVault } from "./pages/AzureKeyVault";
 import { Profile } from "./pages/Profile";
 import { TriggerReports } from "./pages/TriggerReports";
+import { NavBar } from "./components/navbar";
 
 function App() {
   const { user, isAuthenticated, loginWithRedirect, logout, isLoading, error } =
@@ -21,11 +23,11 @@ function App() {
   }
 
   console.log(isAuthenticated);
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !isLoading) {
     loginWithRedirect();
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && !isLoading) {
     console.log("in App");
     return (
       <>

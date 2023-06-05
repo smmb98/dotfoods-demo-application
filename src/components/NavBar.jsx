@@ -15,10 +15,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const pages = ["Products", "Pricing", "Blog"];
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Item = ({ title, to, selected, setSelected }) => {
   return (
@@ -78,12 +77,22 @@ const Item = ({ title, to, selected, setSelected }) => {
 };
 // const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => { }
 
-function NavBar() {
+export function NavBar() {
   // const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState(window.location.pathname);
 
+  const { user, isAuthenticated, loginWithRedirect, logout, isLoading, error } =
+    useAuth0();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const logoutButtonHandler = () => {
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -253,7 +262,13 @@ function NavBar() {
                   <Typography textAlign="center">profile</Typography>
                 </MenuItem>
               </Link>
-              <MenuItem key={"Logout"} onClick={handleCloseUserMenu}>
+              <MenuItem
+                key={"Logout"}
+                onClick={() => {
+                  handleCloseUserMenu();
+                  logoutButtonHandler();
+                }}
+              >
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
               {/* {settings.map((setting) => (
@@ -265,4 +280,4 @@ function NavBar() {
     </AppBar>
   );
 }
-export default NavBar;
+// export default NavBar;
