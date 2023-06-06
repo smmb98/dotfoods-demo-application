@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import client from "../../config";
-import { CenterFocusStrong } from "@mui/icons-material";
+import client from "../utils/AppConfigurationservice";
 
 export function AzureAppConfig() {
   useEffect(() => {
@@ -30,14 +29,14 @@ export function AzureAppConfig() {
   };
   return (
     <div>
-      <h1 style={{ color: settingColor }} >Azure App Configuration Demo</h1>
+      <h1 style={{ color: settingColor }}>Azure App Configuration Demo</h1>
+      <button onClick={fetchConfiguration}>Fetch Configuration</button>
       {settingValue ? (
         <p>Setting value: {settingValue}</p>
       ) : (
         <p>To load setting values, press the button...</p>
       )}
       <h2 style={{ color: settingColor }}>Lets see if this works</h2>
-      <button onClick={fetchConfiguration}>Fetch Configuration</button>
     </div>
   );
 }
